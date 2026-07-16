@@ -2,7 +2,7 @@ import { v2 as cloudinary } from 'cloudinary'
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import prisma from '@/lib/prisma'
-import { revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
       }
     })
     
-    revalidateTag(`tasks-${taskId}`)
+    revalidatePath('/', 'layout')
     return NextResponse.json({ url: result.secure_url })
   } catch (error) {
     return NextResponse.json({ error: 'Upload failed' }, { status: 500 })

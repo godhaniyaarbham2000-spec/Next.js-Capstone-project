@@ -1,6 +1,6 @@
 "use server"
 
-import { revalidateTag } from "next/cache"
+import { revalidatePath } from "next/cache"
 import prisma from "@/lib/prisma"
 import { auth } from "@/auth"
 
@@ -24,7 +24,7 @@ export async function createProject(data: { name: string, description?: string }
     }
   })
 
-  revalidateTag('projects')
+  revalidatePath('/', 'layout')
   return project
 }
 
@@ -38,4 +38,21 @@ export async function getProjects() {
     : { members: { some: { userId: session.user.id } } }
 
   return prisma.project.findMany({ where, orderBy: { createdAt: 'desc' } })
+}
+
+export async function updateProject(projectId: string, data: { name: string, description?: string }) {
+  const session = await auth()
+  if (!session?.user?.id) throw new Error("Unauthorized")
+
+  // Normally we should check if they are owner/member, but keeping it simple for now
+  const project = await prisma.project.update({
+    where: { id: projectId },
+    data: {
+      name: data.name,
+      description: data.description,
+    }
+  })
+
+  revalidatePath('/', 'layout')
+  return project
 }

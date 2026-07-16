@@ -4,13 +4,14 @@ import { updateTaskStatus } from "@/app/actions/tasks"
 
 type Task = { id: string, title: string, description: string | null, status: string, priority: string, projectId: string }
 
-import Link from "next/link"
+
 
 export default function KanbanBoard({ initialTasks, projectId }: { initialTasks: Task[], projectId: string }) {
   const [tasks, setTasks] = useState(initialTasks)
   
   // Update local state when server data changes (like after adding a new task)
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTasks(initialTasks)
   }, [initialTasks])
 

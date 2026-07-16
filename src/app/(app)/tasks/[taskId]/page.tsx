@@ -1,5 +1,7 @@
 import prisma from "@/lib/prisma"
 import { notFound } from "next/navigation"
+import TaskDetailsView from "@/components/TaskDetailsView"
+import Link from "next/link"
 
 export default async function TaskDetailPage({ params }: { params: Promise<{ taskId: string }> }) {
   const { taskId } = await params
@@ -11,27 +13,13 @@ export default async function TaskDetailPage({ params }: { params: Promise<{ tas
   if (!task) notFound()
 
   return (
-    <div className="max-w-3xl mx-auto border rounded p-6 shadow bg-white">
-      <h1 className="text-3xl font-bold">{task.title}</h1>
-      <p className="text-gray-500 mt-2">{task.description}</p>
+    <div className="max-w-3xl mx-auto py-12">
+      <Link href={`/projects/${task.project.slug}`} className="text-blue-600 hover:underline mb-6 inline-block">
+        &larr; Back to {task.project.name}
+      </Link>
       
-      <div className="grid grid-cols-2 gap-4 mt-6">
-        <div>
-          <strong className="block text-gray-700">Status</strong>
-          <span>{task.status.replace("_", " ")}</span>
-        </div>
-        <div>
-          <strong className="block text-gray-700">Priority</strong>
-          <span>{task.priority}</span>
-        </div>
-        <div>
-          <strong className="block text-gray-700">Project</strong>
-          <span>{task.project.name}</span>
-        </div>
-        <div>
-          <strong className="block text-gray-700">Assignee</strong>
-          <span>{task.assignee?.name || "Unassigned"}</span>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+        <TaskDetailsView task={task} />
       </div>
     </div>
   )
