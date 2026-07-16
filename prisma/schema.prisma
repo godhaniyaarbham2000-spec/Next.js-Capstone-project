@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String?
+  role          String    @default("USER") // "USER" | "ADMIN"
+  avatarUrl     String?
+  projects      ProjectMember[]
+  tasks         Task[]    @relation("AssignedTasks")
+  createdAt     DateTime  @default(now())
+}
+
+model Project {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  slug        String    @unique
+  members     ProjectMember[]
+  tasks       Task[]
+  createdAt   DateTime  @default(now())
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  status      String    @default("TODO") // "TODO" | "IN_PROGRESS" | "DONE"
+  priority    String    @default("MEDIUM") // "LOW" | "MEDIUM" | "HIGH"
+  dueDate     DateTime?
+  projectId   String
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assigneeId  String?
+  assignee    User?     @relation("AssignedTasks", fields: [assigneeId], references: [id])
+  attachments Attachment[]
+  createdAt   DateTime  @default(now())
+}
+
+model Attachment {
+  id        String    @id @default(cuid())
+  url       String    // Cloudinary URL
+  publicId  String    // Cloudinary public ID for deletion
+  taskId    String
+  task      Task      @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+model ProjectMember {
+  userId    String
+  projectId String
+  role      String    @default("MEMBER") // "OWNER" | "MEMBER"
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@id([userId, projectId])
+}
