@@ -23,6 +23,7 @@ export default function AddTaskModal({ projectId }: { projectId: string }) {
       await createTask({ title, description, projectId })
       setIsOpen(false)
       router.refresh()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message || "Failed to create task")
     } finally {

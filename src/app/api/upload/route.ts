@@ -26,6 +26,7 @@ export async function POST(request: NextRequest) {
   const buffer = Buffer.from(arrayBuffer)
   
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const result: any = await new Promise((resolve, reject) => {
       cloudinary.uploader.upload_stream({
         folder: 'taskflow/attachments',

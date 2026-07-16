@@ -23,6 +23,7 @@ export default function NewProjectPage() {
       // Redirect to the new project's detail page
       router.push(`/projects/${project.slug}`)
       router.refresh()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message || "Something went wrong")
       setLoading(false)

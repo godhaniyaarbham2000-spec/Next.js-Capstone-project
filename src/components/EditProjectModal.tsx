@@ -25,6 +25,7 @@ export default function EditProjectModal({ project }: { project: Project }) {
       await updateProject(project.id, { name, description })
       setIsOpen(false)
       router.refresh()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message || "Failed to update project")
     } finally {

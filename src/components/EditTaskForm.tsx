@@ -25,6 +25,7 @@ export default function EditTaskForm({ task, onCancel }: { task: Task, onCancel:
       await updateTaskDetails(task.id, { title, description, priority }, task.projectId)
       onCancel() // close edit mode
       router.refresh()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message || "Failed to update task")
       setLoading(false)
