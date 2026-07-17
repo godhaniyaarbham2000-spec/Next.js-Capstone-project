@@ -14,10 +14,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | TaskFlow',
-    default: 'TaskFlow - Team Task Management',
+    template: '%s | Capstone | Avg',
+    default: 'Capstone | Avg',
   },
-  description: "Organize your projects, assign tasks, and track progress effortlessly.",
+  description: "Capstone project built with Next.js, featuring task management and modern UI.",
 };
 
 export default function RootLayout({
