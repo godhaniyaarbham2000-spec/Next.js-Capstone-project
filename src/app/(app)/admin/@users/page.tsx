@@ -1,5 +1,7 @@
 import prisma from "@/lib/prisma"
 
+import AdminUserActions from "@/components/AdminUserActions"
+
 export default async function AdminUsersSlot() {
   const users = await prisma.user.findMany({
     orderBy: { createdAt: 'desc' }
@@ -29,8 +31,7 @@ export default async function AdminUsersSlot() {
                   </span>
                 </td>
                 <td className="py-3">
-                  <button className="text-blue-600 hover:underline text-sm mr-3">Edit Role</button>
-                  <button className="text-red-600 hover:underline text-sm">Delete</button>
+                  <AdminUserActions user={user} />
                 </td>
               </tr>
             ))}
