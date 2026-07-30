@@ -1,8 +1,10 @@
 # 🚀 TaskFlow (Full-Stack Project Management Web App)
 
+🌐 **Live Demo:** [https://taskflow-three-blue.vercel.app](https://taskflow-three-blue.vercel.app)
+
 A complete, production-grade web application built entirely on the modern **Next.js App Router**. This project demonstrates the power of building full-stack applications using a single framework (Frontend + Backend unified) running on **Node.js**.
 
-It covers everything from advanced routing concepts, Server Components, and Server Actions to database integration with **Prisma (MySQL)** and secure authentication using **Auth.js v5**.
+It covers everything from advanced routing concepts, Server Components, and Server Actions to database integration with **Prisma (MySQL/Supabase)** and secure authentication using **Auth.js v5**.
 
 ---
 

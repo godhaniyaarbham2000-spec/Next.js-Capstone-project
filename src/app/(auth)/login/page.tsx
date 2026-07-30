@@ -40,7 +40,9 @@ export default function LoginPage() {
           <label className="block text-sm font-medium text-gray-700">Password</label>
           <input type="password" name="password" required className="mt-1 w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 outline-none" />
         </div>
-        <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded mt-2 hover:bg-blue-700 transition">Log In</button>
+        <button disabled={isPending} type="submit" className={`w-full bg-blue-600 text-white py-2 rounded mt-2 transition ${isPending ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'}`}>
+          {isPending ? 'Logging in...' : 'Log In'}
+        </button>
       </form>
       <div className="text-center text-sm">
         Don&apos;t have an account? <Link href="/register" className="text-blue-600 hover:underline">Register</Link>

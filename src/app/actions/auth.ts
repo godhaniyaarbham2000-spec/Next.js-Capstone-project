@@ -39,10 +39,14 @@ export async function loginAction(formData: FormData) {
     await signIn("credentials", {
       email: data.email,
       password: data.password,
-      redirect: false,
+      redirectTo: "/projects", // Login ke baad projects/dashboard pe jana chahiye
     })
-    return { success: true }
-  } catch (error) {
-    return { error: "Invalid email or password" }
+  } catch (error: any) {
+    if (error.name === "AuthError" || error.type === "CredentialsSignin") {
+      return { error: "Invalid email or password" }
+    }
+    // Next.js redirect hamesha ek error throw karta hai (NEXT_REDIRECT)
+    // Isliye usko catch nahi karna chahiye, balki re-throw karna chahiye
+    throw error;
   }
 }
